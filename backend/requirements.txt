@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+requests
+pydantic
+duckduckgo-search
+sentence-transformers
+faiss-cpu
