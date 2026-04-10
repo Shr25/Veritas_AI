@@ -1,6 +1,8 @@
 from fastapi import FastAPI 
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 import json
 import re
 import time
@@ -29,7 +31,7 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"status": "online", "message": "Veritas AI Backend is successfully running!"}
+    return FileResponse(str(_REPO_ROOT / "frontend" / "popup.html"))
 
 class Input(BaseModel):
     text: str
@@ -401,3 +403,6 @@ def fetch(job_id: str):
         "status": job.get("status") or "done",
         "results": job.get("results") or []
     }
+
+# Serve the static files (frontend assets)
+app.mount("/", StaticFiles(directory=str(_REPO_ROOT / "frontend")), name="frontend")
