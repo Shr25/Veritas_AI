@@ -1,42 +1,23 @@
-from utils.llm import call_llm
+from backend.utils.llm import call_llm
 
-def judge_agent(c, e):
-    
-    if e.strip():  # ✅ Evidence exists
-        prompt = f"""
-You are a fact-checking system.
+def judge_agent(c, combined_evidence):
+    prompt = f"""
+    Fact-check the claim using the evidence.
 
-Claim: {c}
-Evidence: {e}
+    Claim: "{c}"
+    Evidence: "{combined_evidence}"
 
-Rules:
-- Use ONLY the given evidence
-- If evidence is weak → return NOT ENOUGH INFO
+    Instructions:
+    - Decide if the claim is SUPPORTED or REFUTED
+    - If false, state the correct fact
+    - Keep reasoning short (1 sentence)
+    - Ensure verdict and reason are consistent
 
-Return ONLY JSON:
-{{
-  "claim": "{c}",
-  "verdict": "SUPPORTS / CONTRADICTS / NOT ENOUGH INFO",
-  "reason": "short explanation"
-}}
-"""
-    else:  # 🔥 No evidence → use knowledge
-        prompt = f"""
-You are a knowledgeable fact-checking assistant.
-
-Claim: {c}
-
-Rules:
-- Use general world knowledge
-- Be confident for common facts
-- Do NOT say NOT ENOUGH INFO if the claim is obvious
-
-Return ONLY JSON:
-{{
-  "claim": "{c}",
-  "verdict": "SUPPORTS / CONTRADICTS / NOT ENOUGH INFO",
-  "reason": "short explanation"
-}}
-"""
+    Return ONLY valid JSON:
+    {{
+      "verdict": "SUPPORTED or REFUTED",
+      "reason": "clear, factual sentence"
+    }}
+    """
 
     return call_llm(prompt)

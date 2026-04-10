@@ -9,9 +9,11 @@
     "default_title": "Veritas AI"
   },
 
-  "permissions": ["storage"],
+  "permissions": ["storage", "activeTab", "scripting"],
 
   "host_permissions": [
-    "https://axlike-marcelle-systaltic.ngrok-free.dev/*"
+    "<all_urls>",
+    "http://127.0.0.1:8000/*",
+    "http://localhost:8000/*"
   ]
 }

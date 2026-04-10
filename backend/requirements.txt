@@ -2,6 +2,8 @@ fastapi
 uvicorn
 requests
 pydantic
-duckduckgo-search
 sentence-transformers
 faiss-cpu
+beautifulsoup4
+feedparser
+lxml
