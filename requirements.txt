@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+requests
+pydantic
+sentence-transformers
+faiss-cpu
+beautifulsoup4
+feedparser
+lxml
